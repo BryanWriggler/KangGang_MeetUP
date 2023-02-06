@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h1>Meet Up</h1>
+    <p>Enter information for the event below.</p>
+
+    <form>
+        <label for="name">Event Name:</label>
+        <input type="text" id="name"><br>
+
+        <label for="startTime">Start Time:</label>
+        <input type="datetime-local" id="startTime" min="06:00" max="21:00" required><br>
+
+        <label for="endTime">End Time:</label>
+        <input type="datetime-local" id="endTime" min="06:00" max="21:00" required><br>
+
+        <label for="people">Minimum Participants:</label>
+        <input type="number" id="people"><br>
+
+        <label for="timeLimit">Participate Deadline:</label>
+        <input type="datetime-local" id="timeLimit" min="06:00" max="21:00" required><br>
+
+        <button id="submit">Submit</button>
+    </form>
+
+    <div id="DivContainer"></div>
+
+    <script type="text/javascript">
+
+        //create new functions for submit button
+        var numOfEvent = 0;
+        document.getElementById("submit").addEventListener("click", createEvent);
+
+        //the function to add a new div for the script
+        function createEvent() {
+          let l = localStorage.getItem('group_name')
+          document.body.innerHTML = "<h1>"+l+"</h1>"+ document.body.innerHTML;
+          event.preventDefault();
+            numOfEvent ++;
+            const thisNum = numOfEvent;
+
+            let name = document.getElementById("name").value;
+            let start = new Date(document.getElementById("startTime").value); //add time
+            let end = new Date(document.getElementById("endTime").value); //add time
+            let minPeople = document.getElementById("people").value;
+            let limit = new Date(document.getElementById("timeLimit").value); //add time
+            let numPeople = 0;
+
+            //create the event & add division for it
+            var newDiv = document.createElement("div");
+            newDiv.id = "id" + thisNum;
+
+            var nameT = document.createTextNode(getDescription(name, start, end, minPeople, limit, numPeople));
+            var addPeople = document.createElement("button");
+            addPeople.id = "button" + thisNum;
+            addPeople.appendChild(document.createTextNode("Add People")); //button to add people
+
+            newDiv.appendChild(nameT);
+            newDiv.appendChild(addPeople);
+
+            document.getElementById('DivContainer').appendChild(newDiv);
+
+            document.getElementById("button" + thisNum).addEventListener('click', () => {numPeople++;
+                                                                                         newDiv.innerHTML = getDescription(name, start, end, minPeople, limit, numPeople);
+                                                                  newDiv.appendChild(addPeople);
+                                                                                        });
+
+            //test periodically, then delete the div
+
+
+            const checkDate = () => {
+                const currentDate = new Date();
+
+                if ((currentDate.getTime() >= limit.getTime()  &&  numPeople < minPeople)  ||  currentDate.getTime() >= end.getTime()) {
+                    // execute the function you want to activate
+                    newDiv.parentNode.removeChild(newDiv);
+                    // clear the interval once the function has been activated
+                    clearInterval(intervalId);
+                }
+            };
+            const intervalId = setInterval(checkDate, 1000);
+        }
+
+        //create description and return
+        function getDescription(name, start, end, minPeople, limit, numPeople) {
+            return "Name:"  +name + " | " +
+                   "Start Time: " + start + " | " +
+                   "End Time: " + end + " | " +
+                   "Minimum Participant: " + minPeople + " | " +
+                   "Time Limit: " + limit + " | " +
+                   "Number of People: " + numPeople + " | ";
+        }
+    </script>
+
+    <style>
+
+        *{
+          background-color: pink;  
+          color: white;
+          align-items: center;
+          text-align: center;
+          font-size: 30px;
+        }
+
+        input{
+          border-radius: 10px;
+          margin: 15px;
+        }
+
+        button{
+          border-radius: 10px;
+          width: 200px;
+          height: 100px;
+          color:  white;
+        }
+
+        h1{
+          font-size: 50px;
+          font-style: italic, bold;
+        }
+        img{
+          background-color: pink;
+          height: 30%;
+          width: 30%  ;
+          margin: -30px;
+        }
+
+        div{
+          margin: 100px;
+            text-align: center;
+        }
+    </style>
+</body>
+</html>

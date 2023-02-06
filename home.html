@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Page</title>
+  </head>
+  <body>
+      <img src = "MeetUp.png" alt = "Image is not found">
+    <div class="container">
+      <form action="group_schedule.html" method="get">
+        <button type = "submit"> <a href = "SampleForm.html"> Find Your Perfect Event </a></button>
+      </form>
+    </div>
+
+  </body>
+
+  <script>
+    let p = document.getElementById ("group_name").value   
+  localStorage.setItem('group_name', p)
+
+  </script>
+</html>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  *{
+    background-color: pink;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  img{
+    height: 30%;;
+    width: 30%;
+  }
+
+  input{
+    padding: 20px;
+    border-radius: 15px;
+    outline-color: pink;
+  }
+
+  button{
+   outline-color: pink;
+   border-radius: 15px;
+   margin: 50px;
+   border: none;
+   border-color: white;
+
+  }
+
+  a{
+     text-decoration: none;
+  }
+
+  label{
+    font-size: 50px;
+    margin: 50px;
+  }
+
+
+</style>
